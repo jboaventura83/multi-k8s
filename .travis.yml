@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jboaventura/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true jboaventura/react-test npm test
+
+after_success:
+  - docker build -t jboaventura/multi-client ./client
+  - docker build -t jboaventura/multi-nginx ./nginx
+  - docker build -t jboaventura/multi-server ./server
+  - docker build -t jboaventura/multi-worker ./worker
