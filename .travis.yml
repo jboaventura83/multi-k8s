@@ -13,3 +13,11 @@ after_success:
   - docker build -t jboaventura/multi-nginx ./nginx
   - docker build -t jboaventura/multi-server ./server
   - docker build -t jboaventura/multi-worker ./worker
+  #Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push jboaventura/multi-client 
+  - docker push jboaventura/multi-nginx
+  - docker push jboaventura/multi-server
+  - docker push jboaventura/multi-worker  
+
